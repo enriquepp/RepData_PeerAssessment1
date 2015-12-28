@@ -95,18 +95,20 @@ Sys.setlocale("LC_TIME", "English")
 ```
 
 ```r
-ndata$daytype <- factor(ifelse(weekdays(as.Date(ndata$date)) %in% c("Saturday", "Sunday"), "weekend", "weekday"))
+ndata$daytype <- factor(ifelse(weekdays(as.Date(ndata$date)) %in% 
+                                       c("Saturday", "Sunday"), "weekend", "weekday"))
 ndata_interval_wd <- ndata %>% group_by(interval, daytype) %>%
-        summarize(mean_steps=mean(mean_steps))
+        summarize(nmean_steps=mean(steps))
 
 library(ggplot2, warn.conflicts = FALSE)
-g <- ggplot(ndata_interval_wd, aes(interval, mean_steps))
+g <- ggplot(ndata_interval_wd, aes(interval, nmean_steps))
 g + geom_line() + facet_grid(daytype~.) + 
         labs(title="Average steps per interval and day type", y="average steps")
 ```
 
 ![](PA1_template_files/figure-html/steps_per_interval&daytype-1.png) 
   
-There are not visible differences between weekdays and weekends.  
+There are visible differences between weekdays and weekends. On weekends the distribution
+is more uniform during the day, and the maximum at 08:35 corresponds to weekdays.  
 
 
