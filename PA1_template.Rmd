@@ -70,16 +70,18 @@ Both values do not barely differ from first estimated values.
 ## Are there differences in activity patterns between weekdays and weekends?
 ```{r steps_per_interval&daytype}
 Sys.setlocale("LC_TIME", "English")
-ndata$daytype <- factor(ifelse(weekdays(as.Date(ndata$date)) %in% c("Saturday", "Sunday"), "weekend", "weekday"))
+ndata$daytype <- factor(ifelse(weekdays(as.Date(ndata$date)) %in% 
+                                       c("Saturday", "Sunday"), "weekend", "weekday"))
 ndata_interval_wd <- ndata %>% group_by(interval, daytype) %>%
-        summarize(mean_steps=mean(mean_steps))
+        summarize(nmean_steps=mean(steps))
 
 library(ggplot2, warn.conflicts = FALSE)
-g <- ggplot(ndata_interval_wd, aes(interval, mean_steps))
+g <- ggplot(ndata_interval_wd, aes(interval, nmean_steps))
 g + geom_line() + facet_grid(daytype~.) + 
         labs(title="Average steps per interval and day type", y="average steps")
 ```
   
-There are not visible differences between weekdays and weekends.  
+There are visible differences between weekdays and weekends. On weekends the distribution
+is more uniform during the day, and the maximum at 08:35 corresponds to weekdays.  
 
 
